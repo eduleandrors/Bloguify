@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&display=swap');
+
+.stack-sans-text-stack {
+  font-family: "Stack Sans Text", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Stack Sans Text", sans-serif;
+}
+
+header{
+  display: flex;
+  padding: 1rem;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.logo{
+  max-width: 200px;
+}
+
+.header__nav__container{
+  display: flex;
+  gap: 50px;
+}
+
+.header__nav__container > a{
+  text-decoration: none;
+  color: black;
+}
