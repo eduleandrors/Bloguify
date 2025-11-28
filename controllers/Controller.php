@@ -1,15 +1,15 @@
 <?php 
 
 Class Controller{
-    public $dados;
+    public $dadosModel;
 
     public function __construct(){
-        $this->dados = array();
+        $this->dadosModel = array();
     }
 
     public function carregarTemplate($nomeView, $dadosModel = array()){
 
-        $this->dados = $dadosModel;
+        $this->dadosModel = $dadosModel;
         require 'views/template.php';
     }
 
@@ -17,7 +17,6 @@ Class Controller{
 
         extract($dadosModel);
         require 'views/'.$nomeView.'.php';
-
     }
 }
 
