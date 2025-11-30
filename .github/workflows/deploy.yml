@@ -3,7 +3,7 @@ name: Deploy para Locaweb
 on:
   push:
     branches:
-      - main
+      - main  
 
 jobs:
   ftp-deploy:
@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Baixar código do repositório
+      - name: Baixar repositório
         uses: actions/checkout@v3
 
-      - name: Enviar para FTP da Locaweb
-        uses: locaweb/ftp-deploy-locaweb@v1
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4
         with:
-          host: ${{ secrets.FTP_HOST }}
-          user: ${{ secrets.FTP_USER }}
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
-          remoteDir: ${{ secrets.FTP_PATH }}
-          localDir: "./"
+          server-dir: ${{ secrets.FTP_PATH }}/
+          local-dir: ./
