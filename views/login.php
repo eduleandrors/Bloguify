@@ -8,7 +8,6 @@
             type="email" 
             name="email" 
             id="email" 
-            class="form-control" 
             required
         >
     </div>
@@ -19,7 +18,6 @@
             type="password" 
             name="password" 
             id="password" 
-            class="form-control" 
             required
         >
     </div>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="/projeto-bloguify/assets/styles/style.css">
+    <link rel="stylesheet" href="/projeto-bloguify/assets/styles/home.css">
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&display=swap" rel="stylesheet">
     <title>Home</title>
 </head>
@@ -20,9 +20,9 @@
         </a>  
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li><a href="/projeto-bloguify" class="nav-link px-2 text-white">Início</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Docs</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Fale Conosco</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Sobre nós</a></li>
+            <li><a href="/projeto-bloguify/home/docs" class="nav-link px-2 text-white">Docs</a></li>
+            <li><a href="/projeto-bloguify/home/faleConosco" class="nav-link px-2 text-white">Fale Conosco</a></li>
+            <li><a href="/projeto-bloguify/home/sobreNos" class="nav-link px-2 text-white">Sobre nós</a></li>
             </ul>
             <div class="text-end">
             <button onclick="window.location='/projeto-bloguify/login'" type="button" class="btn btn-outline-light me-2" style="background-color: #1A83FE">Entre</button>
@@ -33,8 +33,10 @@
     </header>
 
     <div class="flex-fill">
-        <?php
-        $this->carregarViewNoTemplate($nomeView, $dadosModel);
+        <?php 
+            if(isset($view)){
+                $this->carregarViewNoTemplate($view);
+            }
         ?>
     </div>
 
@@ -51,13 +53,13 @@
                     <a href="/projeto-bloguify" class="nav-link px-2">Início</a>
                 </li>  
                 <li class="nav-item">
-                    <a href="#" class="nav-link px-2">Docs</a>
+                    <a href="/projeto-bloguify/home/docs" class="nav-link px-2">Docs</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link px-2">Fale Conosco</a>
+                    <a href="/projeto-bloguify/home/faleConosco" class="nav-link px-2">Fale Conosco</a>
                 </li> 
                 <li class="nav-item">
-                    <a href="#" class="nav-link px-2">Sobre nós</a>
+                    <a href="/projeto-bloguify/home/sobreNos" class="nav-link px-2">Sobre nós</a>
                 </li> 
             </ul> 
         </footer> 

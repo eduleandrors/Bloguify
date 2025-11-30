@@ -42,9 +42,7 @@ Class Usuario{
         }
 
         if(password_verify($params["password"], $user["password"])){
-            session_start();
-            $_SESSION['id_usuario'] = $user['id'];
-            return true;
+            return $user;
         }
     
         return false;

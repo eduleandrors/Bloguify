@@ -36,9 +36,6 @@ Class LoginController extends Controller{
         ]);
 
         if ($result === true) {
-            session_start();
-            session_unset();
-            session_destroy();
             header('Location: /projeto-bloguify/login');
         } else {
             echo "Erro ao logar";
@@ -47,6 +44,7 @@ Class LoginController extends Controller{
     }
 
     public function logar(){
+        session_start();
         if($_SERVER["REQUEST_METHOD"] === "POST"){
 
             $email = $_POST["email"];
@@ -63,7 +61,8 @@ Class LoginController extends Controller{
             ]);
 
             if($result){
-                $this->carregarViewNoTemplate('areaPrivada');
+                $_SESSION['id_usuario'] = $result['id_user'];
+                header("Location: /projeto-bloguify/userMenu");
                 exit;
             }else{
                 echo "Email ou senha incorretos - tente novamente.";
@@ -72,7 +71,6 @@ Class LoginController extends Controller{
     }
 
     public function sair(){
-        session_start();
         session_unset();
         session_destroy();
         header('Location: /projeto-bloguify/');

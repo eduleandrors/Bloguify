@@ -7,10 +7,11 @@ Class Controller{
         $this->dadosModel = array();
     }
 
-    public function carregarTemplate($nomeView, $dadosModel = array()){
+    public function carregarTemplate($nomeTemplate, $dadosModel = array()){
 
         $this->dadosModel = $dadosModel;
-        require 'views/template.php';
+        extract($dadosModel);
+        require 'views/'.$nomeTemplate.'.php';
     }
 
     public function carregarViewNoTemplate($nomeView, $dadosModel = array()){
