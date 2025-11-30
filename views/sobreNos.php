@@ -1,1 +1,1 @@
-<h1>AQUI FICA A PAGINA <strong>SOBRE NÓS</strong></h1>
+<h1>Aqui será implementada a página de sobre nós do site</h1>

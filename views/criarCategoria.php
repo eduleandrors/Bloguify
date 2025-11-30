@@ -1,18 +1,19 @@
 <h1>
-    TELA DE CRIAÇÃO DAS CATEGORIAS
+    Cadastre categorias para utilizar nos posts!
 </h1>
 <div class="criar_post">
-    <form action="/projeto-bloguify/userMenu/criarCategoriaAction" method="POST" enctype="multipart/form-data">
-        <div>
+    <form class="form_categoria"  action="/bloguify/userMenu/criarCategoriaAction" method="POST" enctype="multipart/form-data">
+        <div class="inputs_categoria_e_usuario">
             <label for="titulo">Nome:</label>
             <input 
+                class="form-control"
                 type="text"
                 name="nome"
                 id="nome"
                 required
             >   
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button class="botao_criacao" type="submit" class="btn btn-primary">
             Criar Categoria
         </button>
     </form>

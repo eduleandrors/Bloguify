@@ -1,1 +1,1 @@
-<h1>AQUI FICA A AREA DE DOCS</h1>
+<h1>Aqui será implementada a área de docs e guias do site</h1>

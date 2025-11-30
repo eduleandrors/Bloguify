@@ -1,43 +1,70 @@
-<?php 
+<?php
+class userMenuController extends Controller
+{
 
-Class userMenuController extends Controller{
-
-    public function index(){
-        $this->carregarTemplate('userMenuTemplate', ["view"=> "userMenu"]);
+    public function index()
+    {
+        $this->carregarTemplate('userMenuTemplate', ["view" => "userMenu"]);
     }
 
-    public function criarPost(){
-        $this->carregarTemplate('userMenuTemplate', ["view"=> "criarPost"]);
+    public function criarPost()
+    {
+        $this->carregarTemplate('userMenuTemplate', ["view" => "criarPost"]);
     }
 
-    public function listarPosts(){
-        $posts = $this->listarTodosPostsComCategoria();
-        $this->carregarTemplate('userMenuTemplate', ["view"=> "listarPosts", "posts"=> $posts]);
-    }
-    
-    public function criarCategoria(){
-        $this->carregarTemplate('userMenuTemplate', ["view"=> "criarCategoria"]);
+    public function listarPosts()
+    {
+        $posts = $this->listarTodosPostsComCategoriaAutores();
+        $this->carregarTemplate('userMenuTemplate', ["view" => "listarPosts", "posts" => $posts]);
     }
 
-    public function criarPostAction(){
-        if($_SERVER["REQUEST_METHOD"] === "POST"){
+    public function criarCategoria()
+    {
+        $this->carregarTemplate('userMenuTemplate', ["view" => "criarCategoria"]);
+    }
+
+    public function criarUsuario()
+    {
+        $this->carregarTemplate('userMenuTemplate', ["view" => "criarUsuario"]);
+    }
+
+    public function criarUsuarioAction()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+            $name = $_POST["name"];
+            $email = $_POST["email"];
+            $password = $_POST["password"];
+
+            if (empty($email) || empty($password)) {
+                die("Campos obrigatórios");
+            }
+
+            $userModel = new Usuario();
+            $userModel->criarUsuario([
+                "name" => $name,
+                "email" => $email,
+                "password" => $password
+            ]);
+
+            header("Location: /bloguify/userMenu");
+            exit;
+        }
+    }
+
+    public function criarPostAction()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $titulo = $_POST["titulo"];
             $subtitulo = $_POST["subtitulo"];
             $texto = $_POST["texto"];
             $idUser = $_SESSION['id_usuario'];
             $caminhoImagem = null;
-                if (!empty($_FILES['imagem']['name'])) {
+            if (!empty($_FILES['imagem']['name'])) {
 
-                // Pega extensão
                 $ext = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
-
-                // Gera nome único
                 $nomeNovo = uniqid() . "." . $ext;
-
-                // Caminho onde o arquivo ficará
                 $destino = "uploads/imagens-postagens/" . $nomeNovo;
-
-                // Move o arquivo
                 if (move_uploaded_file($_FILES['imagem']['tmp_name'], $destino)) {
                     $caminhoImagem = $destino;
                 } else {
@@ -47,74 +74,80 @@ Class userMenuController extends Controller{
 
             $postModel = new Post();
             $postId = $postModel->criarPost([
-                "titulo"=> $titulo,
-                "subtitulo"=> $subtitulo,
-                "caminhoImagem"=> $caminhoImagem,
-                "texto"=> $texto,
-                "idUser"=> $idUser
+                "titulo" => $titulo,
+                "subtitulo" => $subtitulo,
+                "caminhoImagem" => $caminhoImagem,
+                "texto" => $texto,
+                "idUser" => $idUser
             ]);
 
             $categoriasSelecionadas = $_POST['categorias'] ?? [];
             $postModel->vincularCategorias($postId, $categoriasSelecionadas);
 
+            $autoresSelecionados = $_POST['autores'] ?? [];
+            $postModel->vincularAutores($postId, $autoresSelecionados);
 
-            header("Location: /projeto-bloguify/userMenu");
+
+            header("Location: /bloguify/userMenu");
             exit;
         }
     }
 
-    public function criarCategoriaAction(){
-        if($_SERVER["REQUEST_METHOD"] === "POST"){
+    public function criarCategoriaAction()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $nome = $_POST["nome"];
 
             $postModel = new Post();
             $postModel->criarCategoria([
-                "nome"=> $nome
+                "nome" => $nome
             ]);
-            header("Location: /projeto-bloguify/userMenu/criarCategoria");
+            header("Location: /bloguify/userMenu/criarCategoria");
             exit;
         }
     }
 
-    public function listarTodosPostsComCategoria(){
+    public function listarTodosPostsComCategoriaAutores()
+    {
         $postModel = new Post();
         $posts = $postModel->listarTodosPosts($_SESSION['id_usuario']);
         foreach ($posts as $key => $post) {
-            // Usamos o ID do post para buscar suas categorias
             $categorias = $postModel->listarCategoriasDoPost($post['id_post']);
-            
-            // Anexamos o array de categorias ao array do post
+            $autores = $postModel->listarAutoresDoPost($post['id_post']);
             $posts[$key]['categorias'] = $categorias;
+            $posts[$key]['autores'] = $autores;
         }
         return $posts;
     }
 
-    public function excluirPost($id){
+    public function excluirPost($id)
+    {
         $postModel = new Post();
         $postModel->excluirPost($id);
 
-        header("Location: /projeto-bloguify/userMenu/listarPosts");
+        header("Location: /bloguify/userMenu/listarPosts");
         exit;
     }
 
-    public function updatePost() {
-    $id = $_POST['id'];
-    $titulo = $_POST['titulo'];
-    $subtitulo = $_POST['subtitulo'];
-
-    $postModel = new Post();
-    $postModel->atualizarPost($id, $titulo, $subtitulo);
-
-    header("Location: /projeto-bloguify/userMenu/listarPosts");
-}
-
-    public function publicarPost($id){
+    public function updatePost()
+    {
+        $id = $_POST['id'];
+        $titulo = $_POST['titulo'];
+        $subtitulo = $_POST['subtitulo'];
+        $texto = $_POST['texto'];
+        
         $postModel = new Post();
-        $postModel->publicarPost($id);
+        $postModel->atualizarPost($id, $titulo, $subtitulo, $texto);
 
-        header("Location: /projeto-bloguify/userMenu/listarPosts");
+        header("Location: /bloguify/userMenu/listarPosts");
     }
 
-}
+    public function publicarPost($id)
+    {
+        $postModel = new Post();
+        $postedBy = $_SESSION['nome_usuario'];
+        $postModel->publicarPost($id, $postedBy);
 
-?>
+        header("Location: /bloguify/userMenu/listarPosts");
+    }
+}

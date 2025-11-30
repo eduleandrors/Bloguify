@@ -1,0 +1,29 @@
+.post{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.categorias{
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+.categoria{
+    border: 1px solid #0A7DDB;
+    font-size: 0.8rem;
+    padding: 2px 4px;
+    border-radius: 10px;
+    color: #0A7DDB;
+}
+
+.post_autors{
+    font-size: 0.75rem;
+    color: gray;
+}
+
+.imagem_post{
+    margin: auto;
+    max-width: 100%;
+}

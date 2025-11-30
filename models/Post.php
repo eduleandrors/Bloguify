@@ -10,8 +10,8 @@ Class Post{
     }
 
     public function criarPost($params){
-        $sql = "INSERT INTO post (titulo, subtitulo, fk_id_user, imagem, texto, isPosted, createdOn)
-            VALUES (:titulo, :subtitulo, :fk_id_user, :imagem, :texto, 0, NOW())";
+        $sql = "INSERT INTO post (titulo, subtitulo, fk_id_user, imagem, texto, isPosted)
+            VALUES (:titulo, :subtitulo, :fk_id_user, :imagem, :texto, 0)";
  
         $stmt = $this->pdo->prepare($sql);
         
@@ -51,29 +51,32 @@ Class Post{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function listarPostsPublicados() {
+        $sql = "SELECT * FROM post WHERE isPosted = 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function excluirPost($id){
         $sql = "DELETE FROM post WHERE id_post = ?";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$id]);
     }
 
-    public function atualizarPost($id, $titulo, $subtitulo, $texto = null, $imagem = null) {
-        $sql = "UPDATE post SET titulo = :titulo, subtitulo = :subtitulo";
+    public function atualizarPost($id, $titulo, $subtitulo, $texto) {
+        $sql = "UPDATE post SET titulo = :titulo, subtitulo = :subtitulo, texto = :texto";
 
-        if ($texto !== null) $sql .= ", texto = :texto";
-        if ($imagem !== null) $sql .= ", imagem = :imagem";
-
+        
         $sql .= " WHERE id_post = :id";
 
         $stmt = $this->pdo->prepare($sql);
         $params = [
             ":titulo" => $titulo,
             ":subtitulo" => $subtitulo,
+            ":texto" => $texto,
             ":id" => $id
         ];
-
-        if ($texto !== null) $params[':texto'] = $texto;
-        if ($imagem !== null) $params[':imagem'] = $imagem;
 
         return $stmt->execute($params);
     }
@@ -90,19 +93,49 @@ Class Post{
     }
 }
 
-    public function listarCategoriasDoPost($postId,){
-    $sql = "SELECT c.* FROM categoria c
-            INNER JOIN post_categoria pc ON c.id_categoria = pc.fk_categoria_id
-            WHERE pc.fk_post_id = :post_id";
+    public function vincularAutores($postId, $categorias){
+    $sql = "INSERT INTO post_user (fk_id_post, fk_id_user) VALUES (:post, :autor)";
     $stmt = $this->pdo->prepare($sql);
-    $stmt->execute([':post_id' => $postId]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    foreach($categorias as $autorId){
+        $stmt->execute([
+            ":post" => $postId,
+            ":autor" => $autorId
+        ]);
+    }
 }
 
-    public function publicarPost($postId){
-        $sql = "UPDATE post SET isPosted = 1 WHERE id_post = :post_id";
+    public function listarCategoriasDoPost($postId,){
+        $sql = "SELECT c.* FROM categoria c
+                INNER JOIN post_categoria pc ON c.id_categoria = pc.fk_categoria_id
+                WHERE pc.fk_post_id = :post_id";
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([':post_id' => $postId]);
+        $stmt->execute([':post_id' => $postId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+    public function listarAutoresDoPost($postId){
+        $sql = "SELECT * FROM users 
+                INNER JOIN post_user ON users.id_user = post_user.fk_id_user
+                WHERE post_user.fk_id_post = :post_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':post_id' => $postId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+    public function publicarPost($postId, $postedBy){
+        $sql = "UPDATE post SET isPosted = 1, postedOn = NOW(), postedBy = :postedBy WHERE id_post = :post_id";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':post_id' => $postId,
+            ':postedBy' => $postedBy
+    ]);
+    }
+
+    public function exibirPostClicado($postId){
+        $sql = "SELECT * FROM post
+            WHERE id_post = :post_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':post_id' => $postId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
 

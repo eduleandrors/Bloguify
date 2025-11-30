@@ -1,0 +1,93 @@
+.stack-sans-text-stack {
+  font-family: "Stack Sans Text", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body{
+  font-family: "Stack Sans Text", sans-serif !important;
+  min-height: 100vh;
+}
+
+body{
+    background: linear-gradient(182deg, rgba(10, 125, 219, 1) 0%, rgba(10, 54, 105, 1) 40%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    font-size: 2rem !important;
+    color: #0A3669 !important;
+}
+
+.form_container{
+    background-color: white;
+    width: 40%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 2rem 3rem;
+    border-radius: 15px;
+    box-shadow: 2px 3px 12px black;
+}
+
+.form_login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 100%;
+    gap: 2rem;
+}
+
+.form_inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.email, .senha{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    font-size: 1rem;
+    width: 100%;
+
+}
+
+#email, #password{
+    width: 250px;
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+
+.btn_form_submit{
+    width: 100px;
+    padding: 0.4rem 0.5rem;
+    border: none;
+    background-color: #0A7DDB;
+    font-size: 1.1rem;
+    color: white;
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.31);
+}
+
+.btn_form_submit:hover{
+    background-color: #0964ae;
+
+}

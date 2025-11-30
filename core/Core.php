@@ -41,7 +41,7 @@ Class Core{
             $metodo = 'index';
         }
 
-        $caminho = 'projeto-bloguify/controllers/'.$controller.'.php';
+        $caminho = 'bloguify/controllers/'.$controller.'.php';
 
         if(!file_exists($caminho) && !method_exists($controller, $metodo)){
             $controller = 'homeController';

@@ -1,0 +1,128 @@
+.stack-sans-text-stack {
+  font-family: "Stack Sans Text", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+*{
+    margin: 0;  
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+body{
+    min-width: 100vw;
+    min-height: 100vh;
+    font-family: "Stack Sans Text", sans-serif !important;
+    background-color: white;
+    overflow-x: hidden;
+}
+
+.blog_header{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    background-color: #0A3669;
+}
+
+.botao_voltar{
+    position: absolute;
+    left: 10px;
+    top: 13px;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background-color: #0A7DDB;
+    color: white;
+    cursor: pointer;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blog_header_logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main{
+    padding: 2rem 3rem;
+    width: 100%;
+    min-height: 100vh;
+    max-width: 1000px;
+    margin: auto;
+    background-color: white;
+}
+
+.container_post_card{
+    display: flex;
+    height: 250px;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.post_card_image{
+    width: 40%;
+    height: 215px;
+}
+
+.post_card_container_content{
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 60%;
+}
+
+.post_container_categories{
+    display: flex;
+    gap: 1rem;
+}
+
+.post_category{
+    border: 1px solid #0A7DDB;
+    font-size: 0.8rem;
+    padding: 2px 4px;
+    border-radius: 10px;
+    color: #0A7DDB;
+    text-decoration: none;
+}
+
+.post_title{
+    color:#0A3669;
+    font-size: 1.2rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow-wrap: break-word; 
+}
+
+.post_subtitle{
+    color: #647e9b;
+    font-size: 1rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow-wrap: break-word; 
+}
+
+.post_postedOn{
+    font-size: 0.75rem;
+    color: gray;
+}
+
+.blog_footer{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    background-color: #0A3669;
+}

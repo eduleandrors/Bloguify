@@ -1,6 +1,7 @@
-<?php 
+<?php
 
-Class LoginController extends Controller{
+class LoginController extends Controller
+{
 
     private $pdo;
 
@@ -9,48 +10,20 @@ Class LoginController extends Controller{
         $this->pdo = Conexao::getConexao();
     }
 
-    public function index(){        
+    public function index()
+    {
         $this->carregarViewNoTemplate('login');
     }
     
-    public function cadastro(){
-        $this->carregarViewNoTemplate('cadastro');
-    }
-
-    public function cadastrar(){
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-        $name = $_POST["name"];
-        $email = $_POST["email"];
-        $password = $_POST["password"];
-
-        if (empty($email) || empty($password)) {
-            die("Campos obrigatórios");
-        }
-
-        $userModel = new Usuario();
-        $result = $userModel->criarUsuario([
-            "name" => $name,
-            "email" => $email,
-            "password" => $password
-        ]);
-
-        if ($result === true) {
-            header('Location: /projeto-bloguify/login');
-        } else {
-            echo "Erro ao logar";
-        }
-    }
-    }
-
-    public function logar(){
+    public function logar()
+    {
         session_start();
-        if($_SERVER["REQUEST_METHOD"] === "POST"){
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $email = $_POST["email"];
             $password = $_POST["password"];
 
-            if (empty($email) || empty($password)){
+            if (empty($email) || empty($password)) {
                 die("Campos obrigatórios");
             }
 
@@ -60,23 +33,22 @@ Class LoginController extends Controller{
                 "password" => $password
             ]);
 
-            if($result){
+            if ($result) {
                 $_SESSION['id_usuario'] = $result['id_user'];
-                header("Location: /projeto-bloguify/userMenu");
+                $_SESSION['nome_usuario'] = $result['name'];
+                header("Location: /bloguify/userMenu/listarPosts");
                 exit;
-            }else{
+            } else {
                 echo "Email ou senha incorretos - tente novamente.";
             }
         }
     }
 
-    public function sair(){
+    public function sair()
+    {
         session_unset();
         session_destroy();
-        header('Location: /projeto-bloguify/');
+        header('Location: /bloguify/');
         exit;
     }
-
 }
-
-?>
