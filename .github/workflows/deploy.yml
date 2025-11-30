@@ -1,0 +1,24 @@
+name: Deploy para Locaweb
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ftp-deploy:
+    name: Enviar arquivos via FTP
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v3
+
+      - name: Enviar para FTP da Locaweb
+        uses: locaweb/ftp-deploy-locaweb@v1
+        with:
+          host: ${{ secrets.FTP_HOST }}
+          user: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          remoteDir: ${{ secrets.FTP_PATH }}
+          localDir: "./"
